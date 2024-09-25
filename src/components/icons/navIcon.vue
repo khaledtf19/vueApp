@@ -12,8 +12,4 @@ export default {
 }
 </script>
 
-<style scoped>
-* {
-  font-size: 3rem;
-}
-</style>
+<style scoped></style>
