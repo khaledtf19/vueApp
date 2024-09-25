@@ -9,6 +9,32 @@
               <i class="pi pi-user"></i>
             </InputGroupAddon>
             <FloatLabel>
+              <InputText id="firstNAme" v-model="firstName" :invalid="errors.firstName" />
+              <label for="firstNAme">First Name</label>
+            </FloatLabel>
+          </InputGroup>
+
+          <small>{{ errors.firstName }}</small>
+        </div>
+        <div class="input-container">
+          <InputGroup>
+            <InputGroupAddon>
+              <i class="pi pi-user"></i>
+            </InputGroupAddon>
+            <FloatLabel>
+              <InputText id="lastName" v-model="lastName" :invalid="errors.lastName" />
+              <label for="lastName">Last Name</label>
+            </FloatLabel>
+          </InputGroup>
+
+          <small>{{ errors.lastName }}</small>
+        </div>
+        <div class="input-container">
+          <InputGroup>
+            <InputGroupAddon>
+              <i class="pi pi-user"></i>
+            </InputGroupAddon>
+            <FloatLabel>
               <InputText id="email" v-model="email" :invalid="errors.email" />
               <label for="email">Email</label>
             </FloatLabel>
@@ -63,6 +89,8 @@ import { useToast } from 'primevue/usetoast';
 const toast = useToast();
 
 const registerSchema = toTypedSchema(z.object({
+  firstName: z.string().min(3, "Must be more than 3 chars").max(100, "Must Less than 100 chars"),
+  lastName: z.string().min(3, "Must be more than 3 chars").max(100, "Must Less than 100 chars"),
   email: z.string().email("must be an email").min(6, "Must be more than 6 chars").max(200, "must be less tahn 200 chars"),
   password: z.string().min(8, "Must be more than 8 chars").max(200, "Must be less than 200 chars"),
   confirmPassword: z.string().min(8, "Must be more than 8 chars").max(200, "Must be less than 200 chars")
@@ -75,12 +103,14 @@ const { handleSubmit, errors } = useForm({
   validationSchema: registerSchema
 });
 
+const { value: firstName } = useField('firstName');
+const { value: lastName } = useField('lastName');
 const { value: email } = useField('email');
 const { value: password } = useField('password');
 const { value: confirmPassword } = useField("confirmPassword")
 
 function errorClick() {
-  if (errors.value.password || errors.value.email || errors.value.confirmPassword) {
+  if (errors.value.password || errors.value.email || errors.value.confirmPassword || errors.value.firstName || errors.value.lastName) {
     toast.add({ severity: "error", summary: 'Error Message', detail: 'Error when submit', life: 3000 })
   }
 }

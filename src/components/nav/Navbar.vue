@@ -1,11 +1,13 @@
 <template>
   <nav class="nav-container">
+
+    <div class="nav-web" v-if="isOpen">
+      <NavLinks />
+    </div>
     <div class="nav-top">
-      <div class="nav-web">
-        <NavLinks />
-      </div>
       <NavIcon @click="toggleNave" class="nav-icon" />
     </div>
+
 
     <div class="nav-mobile" v-if="isOpen" @click="closeNav">
       <NavLinks :close-nav="closeNav" />
@@ -92,9 +94,7 @@ function closeNav() {
 }
 
 @media (min-width: 1024px) {
-  .nav-icon {
-    display: none;
-  }
+
 
   .nav-mobile {
     display: none;
@@ -102,6 +102,9 @@ function closeNav() {
 
   .nav-web {
     display: flex;
+    position: sticky;
+    top: 0;
+    left: 0;
   }
 
   .nav-top {
