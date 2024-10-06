@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import Navbar from "./components/nav/Navbar.vue";
-import Toast from 'primevue/toast';
+import Sidebar from "./components/nav/Sidebar.vue";
+import Toast from "primevue/toast";
 </script>
 
 <template>
-  <div class="layout-contianer">
+  <div class="layout-contianer flex">
     <Toast />
-    <Navbar />
-    <main>
-      <router-view />
-    </main>
+    <Sidebar />
+    <div class="flex flex-col w-full">
+      <Navbar />
+      <main>
+        <router-view />
+      </main>
+    </div>
   </div>
 </template>
 

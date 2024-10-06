@@ -1,13 +1,16 @@
 <template>
   <nav class="nav-container">
-
-    <div class="nav-web" v-if="isOpen">
-      <NavLinks />
-    </div>
+    <!-- <div class="nav-web" v-if="isOpen"> -->
+    <!--   <NavLinks /> -->
+    <!-- </div> -->
     <div class="nav-top">
-      <NavIcon @click="toggleNave" class="nav-icon" />
+      <NavIcon @click="toggleNave" class="nav-icon md:hidden" />
+      <SidebarIcon
+        @click="navStore.changeNav"
+        class="sidebar-icon text-3xl hidden md:block"
+        :class="{ 'rotate-180': navStore.collapsed }"
+      />
     </div>
-
 
     <div class="nav-mobile" v-if="isOpen" @click="closeNav">
       <NavLinks :close-nav="closeNav" />
@@ -16,16 +19,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import NavIcon from '../icons/navIcon.vue';
-import NavLinks from './NavLinks.vue';
+import { ref } from "vue";
+import NavIcon from "../icons/navIcon.vue";
+import SidebarIcon from "../icons/SidebarIcon.vue";
+import NavLinks from "./NavLinks.vue";
+import { useNavStore } from "../../stores/navbar.ts";
 
-const isOpen = ref(false)
+const navStore = useNavStore();
+
+const isOpen = ref(false);
 function toggleNave() {
-  isOpen.value = !isOpen.value
+  isOpen.value = !isOpen.value;
 }
 function closeNav() {
-  isOpen.value = false
+  isOpen.value = false;
 }
 </script>
 
@@ -65,11 +72,14 @@ function closeNav() {
   z-index: 9999999;
 }
 
-
 .nav-icon {
   padding: 1px;
   border-radius: 0.6rem;
   font-size: 3rem;
+}
+
+.sidebar-icon {
+  transition: transform 0.5s;
 }
 
 .nav-icon:hover,
@@ -94,8 +104,6 @@ function closeNav() {
 }
 
 @media (min-width: 1024px) {
-
-
   .nav-mobile {
     display: none;
   }
@@ -111,7 +119,5 @@ function closeNav() {
     padding: 0.3rem 2rem;
     z-index: auto;
   }
-
-
 }
 </style>
