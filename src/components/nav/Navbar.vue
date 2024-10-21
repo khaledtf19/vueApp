@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-container">
+  <nav class="nav-container bg-gray-200">
     <!-- <div class="nav-web" v-if="isOpen"> -->
     <!--   <NavLinks /> -->
     <!-- </div> -->
@@ -10,6 +10,19 @@
         class="sidebar-icon text-3xl hidden md:block"
         :class="{ 'rotate-180': navStore.collapsed }"
       />
+      <button
+        type="button"
+        class="rounded-full w-10 h-10"
+        @click="toggle"
+        aria-haspopup="true"
+        aria-controls="overlay_tmenu"
+      >
+        <img
+          class="w-full h-full bg-cover rounded-full object-cover"
+          src="https://plus.unsplash.com/premium_photo-1689530775582-83b8abdb5020?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVyc29ufGVufDB8fDB8fHww"
+        />
+      </button>
+      <TieredMenu ref="menu" id="overlay_tmenu" :model="items" popup />
     </div>
 
     <div class="nav-mobile" v-if="isOpen" @click="closeNav">
@@ -24,6 +37,83 @@ import NavIcon from "../icons/navIcon.vue";
 import SidebarIcon from "../icons/SidebarIcon.vue";
 import NavLinks from "./NavLinks.vue";
 import { useNavStore } from "../../stores/navbar.ts";
+import Button from "primevue/button";
+import TieredMenu from "primevue/tieredmenu";
+
+const menu = ref();
+const items = ref([
+  {
+    label: "File",
+    icon: "pi pi-file",
+    items: [
+      {
+        label: "New",
+        icon: "pi pi-plus",
+        items: [
+          {
+            label: "Document",
+            icon: "pi pi-file",
+          },
+          {
+            label: "Image",
+            icon: "pi pi-image",
+          },
+          {
+            label: "Video",
+            icon: "pi pi-video",
+          },
+        ],
+      },
+      {
+        label: "Open",
+        icon: "pi pi-folder-open",
+      },
+      {
+        label: "Print",
+        icon: "pi pi-print",
+      },
+    ],
+  },
+  {
+    label: "Edit",
+    icon: "pi pi-file-edit",
+    items: [
+      {
+        label: "Copy",
+        icon: "pi pi-copy",
+      },
+      {
+        label: "Delete",
+        icon: "pi pi-times",
+      },
+    ],
+  },
+  {
+    label: "Search",
+    icon: "pi pi-search",
+  },
+  {
+    separator: true,
+  },
+  {
+    label: "Share",
+    icon: "pi pi-share-alt",
+    items: [
+      {
+        label: "Slack",
+        icon: "pi pi-slack",
+      },
+      {
+        label: "Whatsapp",
+        icon: "pi pi-whatsapp",
+      },
+    ],
+  },
+]);
+
+const toggle = (event: Event) => {
+  menu.value.toggle(event);
+};
 
 const navStore = useNavStore();
 
@@ -43,7 +133,6 @@ function closeNav() {
   display: flex;
   align-items: center;
   justify-items: center;
-  background: white;
 }
 
 .nav-top {
@@ -52,9 +141,8 @@ function closeNav() {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
   z-index: 999999;
-  background: white;
 }
 
 .nav-mobile {

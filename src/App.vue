@@ -7,10 +7,10 @@ import Toast from "primevue/toast";
 <template>
   <div class="layout-contianer flex">
     <Toast />
-    <Sidebar />
-    <div class="flex flex-col w-full">
+    <Sidebar class="hidden md:block" />
+    <div class="flex flex-col w-full bg-gray-200">
       <Navbar />
-      <main>
+      <main class="bg-gray-200">
         <router-view />
       </main>
     </div>

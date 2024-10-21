@@ -8,21 +8,26 @@
       <!--   @click="navStore.changeNav" -->
       <!--   class="w-10 text-3xl [[data-collapse=true]_&]:rotate-180 sidebar-icon text-white" -->
       <!-- /> -->
-      <RouterLink to="/" class="flex gap-3"
-        ><HomeIcon class="text-white text-3xl" />
-        <span :class="{ 'w-0': navStore.collapsed }">Home</span></RouterLink
+      <RouterLink
+        to="/"
+        class="flex gap-3 link_container"
+        :class="{ link_container_open: !navStore.collapsed }"
+        ><HomeIcon class="w-5 flex-shrink-0" />
+        <span class="grid_text flex-shrink">Home</span></RouterLink
       >
-      <RouterLink to="/login" class="flex gap-3"
-        ><LoginIcon class="text-white text-3xl" />
-        <span :class="{ 'w-0': navStore.collapsed }">Login</span></RouterLink
+      <RouterLink
+        to="/login"
+        class="flex gap-3 link_container w-full"
+        :class="{ link_container_open: !navStore.collapsed }"
+        ><LoginIcon class="w-5 flex-shrink-0" />
+        <span class="grid_text flex-shrink">Login</span></RouterLink
       >
-      <RouterLink to="/register" class="flex gap-3"
-        ><SignUpIcon class="text-white text-3xl" />
-        <span
-          class="linkText opacity-100"
-          :class="{ 'hidden opacity-0': navStore.collapsed }"
-          >Register</span
-        ></RouterLink
+      <RouterLink
+        to="/register"
+        class="flex gap-3 link_container"
+        :class="{ link_container_open: !navStore.collapsed }"
+        ><SignUpIcon class="w-5" />
+        <span class="grid_text flex-shrink">Register</span></RouterLink
       >
     </div>
   </aside>
@@ -44,5 +49,24 @@ const navStore = useNavStore();
   transition-property: display opacity;
   transition-duration: 1s;
   transition-behavior: allow-discrete;
+}
+.link_container {
+  width: 2rem !important;
+  height: 2rem !important;
+  transition-property: width, height, padding;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.link_container_open {
+  width: 100% !important;
+}
+svg {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
 }
 </style>
